@@ -1,11 +1,39 @@
+
+const imgContainer = document.getElementsByClassName(".image-container")[0];
+let imgCounter = 0;
+
 function getCatImage() {
+
     fetch("https://api.thecatapi.com/v1/images/search")
         .then((response) => {
-            // Resolve the promise we got from calling then() to the promise that we get from calling json()
-            response.json();
+
+            return response.json();
         })
         .then((data) => {
-            console.log(data[0].url);
-            document.getElementById("catImage").src = data[0].url;
+
+            populateCatImg(data[0].url);
+
         });
 }
+
+function populateCatImg(data){
+
+    let img;
+
+    if (imgCounter > 0) {
+
+        img = document.createElement("img");
+        img.id = "catImage" + (imgCounter);
+
+    } else { 
+
+        img = document.getElementById("catImage");
+    }
+
+    img.src = data;
+    img.style.visibility= "visible";
+    imgContainer.appendChild(img);
+
+    imgCounter++;
+}
+
